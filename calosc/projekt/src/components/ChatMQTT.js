@@ -75,7 +75,7 @@ export default function ChatMQTT() {
                         onChange={formik.handleChange}
                         value={formik.values.message}
                     />
-                    <button type="submit" className='w-full border-1 border-neutral-700 bg-green-700 text-white'>Wyślij wiadomość do innych userów</button>
+                    <button type="submit" className='w-full border-1 border-neutral-700 bg-gray-600 text-white'>Wyślij wiadomość do innych pokeświrów</button>
                 </form>
             </div>
         </div>

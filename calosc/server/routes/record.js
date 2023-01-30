@@ -63,6 +63,18 @@ recordRoutes.route("/getallusers").get(function(req, res) {
     });
 });
 
+recordRoutes.route("/getallusers/:search").get(function(req, res) {
+    let db_connect = dbo.getDb("uzytkownicy");
+    let myquery = { name: { $regex: req.params.search, $options: "i" } };
+    db_connect
+        .collection("users")
+        .find(myquery)
+        .toArray(function(err, result) {
+            if (err) throw err;
+            res.json(result);
+        });
+});
+
 recordRoutes.route("/deleteuser/:id").delete(function(req, res) {
     let db_connect = dbo.getDb("uzytkownicy");
     let myquery = { _id: ObjectId(req.params.id) };
@@ -85,13 +97,73 @@ recordRoutes.route("/updateuser/:id").put(function(req, res) {
     };
     db_connect.collection("users").updateOne(myquery, newvalues, function(err, result) {
         if (err) throw err;
-        console.log( "User updated, his username is now: " + req.body.name +"")
+        console.log( "User updated, his name is now: " + req.body.name +"")
     });
     res.json({ message: "User updated successfully" })
 });
 
 
+recordRoutes.route("/create").post(function (req, res) {
+    let db_connect = dbo.getDb("pokemony");
+    let myobj = {
+        name: req.body.name,
+        type: req.body.type,
+        level: req.body.level,
+        owner: req.body.owner,
+        image: req.body.image
+    };
+    db_connect.collection("pokemony").insertOne(myobj, function(err, result) {
+        if (err) throw err;
+        console.log('Dodano pokemona: ' + myobj.name + '')
+    });
+    res.json({ message: "Pokemon added successfully" });
+});
+
+
+recordRoutes.route("/getall").get(function(req, res) {
+    let db_connect = dbo.getDb("pokemony");
+    db_connect.collection("pokemony").find({}).toArray(function(err, result) {
+        if (err) throw err;
+        res.json(result);
+    });
+});
     
+
+recordRoutes.route("/update/:id").put(function(req, res) {
+    let db_connect = dbo.getDb("pokemony");
+    let myquery = { _id: ObjectId(req.params.id) };
+    let newvalues = {
+        $set: {
+            name: req.body.name,
+            type: req.body.type,
+            level: req.body.level,
+            owner: req.body.owner,
+            image: req.body.image
+        }
+    };
+    db_connect.collection("pokemony").updateOne(myquery, newvalues, function(err, result) {
+        if (err) throw err;
+        console.log( "Pokemon updated, his name is now: " + req.body.name +"")
+    });
+    res.json({ message: "Pokemon updated successfully" })
+});
+
+
+recordRoutes.route("/delete/:id").delete(function(req, res) {
+    let db_connect = dbo.getDb("pokemony");
+    let myquery = { _id: ObjectId(req.params.id) };
+    db_connect.collection("pokemony").deleteOne(myquery, function(err, result) {
+        if (err) throw err;
+        res.json(result);
+    });
+});
+
+
+
+
+
+
+
 
 
 module.exports = recordRoutes;
