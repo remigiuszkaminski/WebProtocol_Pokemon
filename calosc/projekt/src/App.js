@@ -5,6 +5,8 @@ import RegisterForm from './components/RegisterForm';
 import Home from './components/Home';
 import LoginForm from './components/LoginForm';
 import ChatMQTT from './components/ChatMQTT';
+import CreatePokemon from './components/CreatePokemon';
+import PokemonSearch from './components/PokemonSearch';
 function App() {
   return (
     <div className="App">
@@ -13,6 +15,8 @@ function App() {
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/chat" element={<ChatMQTT />} />
+        <Route path='create' element={<CreatePokemon />} />
+        <Route path='search' element={<PokemonSearch />} />
       </Routes>
     </div>
   );

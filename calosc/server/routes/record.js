@@ -110,7 +110,8 @@ recordRoutes.route("/create").post(function (req, res) {
         type: req.body.type,
         level: req.body.level,
         owner: req.body.owner,
-        image: req.body.image
+        image: req.body.image,
+        opinions: []
     };
     db_connect.collection("pokemony").insertOne(myobj, function(err, result) {
         if (err) throw err;
@@ -127,7 +128,19 @@ recordRoutes.route("/getall").get(function(req, res) {
         res.json(result);
     });
 });
-    
+
+recordRoutes.route("/getall/:search").get(function(req, res) {
+    let db_connect = dbo.getDb("pokemony");
+    let myquery = { name: { $regex: req.params.search, $options: "i" } };
+    db_connect
+        .collection("pokemony")
+        .find(myquery)
+        .toArray(function(err, result) {
+            if (err) throw err;
+            res.json(result);
+        });
+});
+
 
 recordRoutes.route("/update/:id").put(function(req, res) {
     let db_connect = dbo.getDb("pokemony");
