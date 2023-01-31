@@ -7,6 +7,8 @@ import LoginForm from './components/LoginForm';
 import ChatMQTT from './components/ChatMQTT';
 import CreatePokemon from './components/CreatePokemon';
 import PokemonSearch from './components/PokemonSearch';
+import EachPokemon from './components/EachPokemon';
+
 function App() {
   return (
     <div className="App">
@@ -17,6 +19,7 @@ function App() {
         <Route path="/chat" element={<ChatMQTT />} />
         <Route path='create' element={<CreatePokemon />} />
         <Route path='search' element={<PokemonSearch />} />
+        <Route path='pokemon/:id' element={<EachPokemon />} />
       </Routes>
     </div>
   );

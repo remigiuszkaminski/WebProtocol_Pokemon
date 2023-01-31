@@ -142,6 +142,19 @@ recordRoutes.route("/getall/:search").get(function(req, res) {
 });
 
 
+recordRoutes.route("/getpokemon/:id").get(function(req, res) {
+    let db_connect = dbo.getDb("pokemony");
+    let myquery = { _id: ObjectId(req.params.id) };
+    db_connect
+        .collection("pokemony")
+        .find(myquery)
+        .toArray(function(err, result) {
+            if (err) throw err;
+            res.json(result);
+        });
+});
+
+
 recordRoutes.route("/update/:id").put(function(req, res) {
     let db_connect = dbo.getDb("pokemony");
     let myquery = { _id: ObjectId(req.params.id) };

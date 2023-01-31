@@ -65,10 +65,11 @@ export default function PokemonSearch() {
                         <img className='h-64 align-center w-76 ' src={pokemon.image} alt={pokemon.name}></img>
                     </div>
                     <div className='px-6 py-4 bg-slate-400 h-40 ' >
-                      <p className=' text-xs mb-2'></p>
+                        <p className=' text-xs mb-2'>Nazwa: {pokemon.name}</p>
                       <p className=' text-xs mt-2'>Właściciel: {pokemon.owner}</p>
                       <p className=' text-xs mt-2'>Typ: {pokemon.type}</p>
                       <p className=' text-xs mt-2'>Poziom: {pokemon.level}</p>
+                      <p className=' text-xs mt-2 text-blue-600'><Link to={`/pokemon/${pokemon._id}`}>Strona o nim</Link></p>
                     </div>
                   </div>
                 ))}
