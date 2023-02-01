@@ -8,7 +8,7 @@ import ChatMQTT from './components/ChatMQTT';
 import CreatePokemon from './components/CreatePokemon';
 import PokemonSearch from './components/PokemonSearch';
 import EachPokemon from './components/EachPokemon';
-
+import YourAcc from './components/YourAcc';
 function App() {
   return (
     <div className="App">
@@ -20,6 +20,7 @@ function App() {
         <Route path='create' element={<CreatePokemon />} />
         <Route path='search' element={<PokemonSearch />} />
         <Route path='pokemon/:id' element={<EachPokemon />} />
+        <Route path='youracc/:id' element={<YourAcc />} />
       </Routes>
     </div>
   );

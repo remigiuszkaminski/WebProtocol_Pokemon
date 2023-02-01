@@ -85,23 +85,32 @@ recordRoutes.route("/deleteuser/:id").delete(function(req, res) {
 });
 
 
-recordRoutes.route("/updateuser/:id").put(function(req, res) {
+recordRoutes.route("/getuser/:id").get(function(req, res) {
     let db_connect = dbo.getDb("uzytkownicy");
     let myquery = { _id: ObjectId(req.params.id) };
-    let newvalues = {
-        $set: {
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password
-        }
-    };
-    db_connect.collection("users").updateOne(myquery, newvalues, function(err, result) {
+    db_connect.collection("users").find(myquery).toArray(function(err, result) {
         if (err) throw err;
-        console.log( "User updated, his name is now: " + req.body.name +"")
+        res.json(result);
     });
-    res.json({ message: "User updated successfully" })
 });
 
+
+recordRoutes.route("/updateuserpassword/:id").put(function(req, res) {
+    let db_connect = dbo.getDb("uzytkownicy");
+    let myquery = { _id: ObjectId(req.params.id) };
+    bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+        let newvalues = {
+            $set: {
+                password: hash
+            }
+        };
+        db_connect.collection("users").updateOne(myquery, newvalues, function(err, result) {
+            if (err) throw err;
+            console.log( "User password updated")
+        });
+        res.json({ message: "User password updated successfully" })
+    });
+});
 
 recordRoutes.route("/create").post(function (req, res) {
     let db_connect = dbo.getDb("pokemony");
@@ -173,6 +182,46 @@ recordRoutes.route("/update/:id").put(function(req, res) {
     });
     res.json({ message: "Pokemon updated successfully" })
 });
+
+
+recordRoutes.route("/addopinion/:id").put(function(req, res) {
+    let db_connect = dbo.getDb("pokemony");
+    let myquery = { _id: ObjectId(req.params.id) };
+    let newvalues = {
+        $push: {
+            opinions: {
+                name: req.body.name,
+                opinion: req.body.opinion
+            }
+        }
+    };
+    db_connect.collection("pokemony").updateOne(myquery, newvalues, function(err, result) {
+        if (err) throw err;
+        console.log( "Opinion added")
+    });
+    res.json({ message: "Opinion added successfully" })
+});
+
+
+recordRoutes.route("/deleteopinion/:id").put(function(req, res) {
+    let db_connect = dbo.getDb("pokemony");
+    let myquery = { _id: ObjectId(req.params.id) };
+    let newvalues = {
+        $pull: {
+            opinions: {
+                name: req.body.name,
+                opinion: req.body.opinion
+            }
+        }
+    };
+    db_connect.collection("pokemony").updateOne(myquery, newvalues, function(err, result) {
+        if (err) throw err;
+        console.log( "Opinion deleted")
+    });
+    res.json({ message: "Opinion deleted successfully" })
+});
+
+
 
 
 recordRoutes.route("/delete/:id").delete(function(req, res) {

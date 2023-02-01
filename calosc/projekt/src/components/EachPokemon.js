@@ -9,6 +9,13 @@ export default function EachPokemon() {
     const [pokemon, setPokemon] = useState({});
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    function getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length === 2) return parts.pop().split(";").shift();
+    }
+
+    const name = getCookie('name');
     useEffect(() => {
         fetch(`http://localhost:5000/getpokemon/${id}`)
             .then((res) => res.json())
@@ -48,6 +55,16 @@ export default function EachPokemon() {
         return errors;
     };
 
+    const validate2 = (values) => {
+        const errors = {};
+        if (!values.opinion) {
+            errors.opinion = 'Required';
+        } else if (values.opinion.length > 100) {
+            errors.opinion = 'Must be 100 characters or less';
+        }
+        return errors;
+    };
+
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -79,8 +96,39 @@ export default function EachPokemon() {
                 .catch((err) => {
                     console.log(err);
                 });
+            navigate(`/search`);
         },
     });
+
+    const formik2 = useFormik({
+        initialValues: {
+            name: name,
+            opinion: '',
+        },
+        validate2,
+        onSubmit: (values) => {
+            fetch(`http://localhost:5000/addopinion/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: values.name,
+                    opinion: values.opinion,
+                }),
+            })
+                .then((res) => {
+                    if (res.status === 200) {
+                        alert('Opinia została dodana');
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            formik2.resetForm();
+        },
+    });
+
 
     function handleDelete() {
         fetch(`http://localhost:5000/delete/${id}`, {
@@ -124,6 +172,44 @@ export default function EachPokemon() {
                         <p className=' text-xs mt-2'>Typ: {pokemon[0].type}</p>
                         <p className=' text-xs mt-2'>Poziom: {pokemon[0].level}</p>
                     </div>
+                </div>
+                <div className='mb-4'>
+                    <div className='text-center'>Opinie o tym pokemonie:</div>
+                    {pokemon[0].opinions.map((opinion) => (
+                        <div className='bg-white shadow-md rounded px-8 pt-6 pb-8 w-96 ml-auto mr-auto'>
+                            <p className='text-xs mb-2'>{opinion.name}: {opinion.opinion}</p>
+                            {opinion.name === name && (
+                                <button
+                                    className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+                                    onClick={() => {
+                                        fetch(`http://localhost:5000/deleteopinion/${id}`, {
+                                            method: 'PUT',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify({
+                                                name: opinion.name,
+                                                opinion: opinion.opinion,
+                                            }),
+                                        })
+                                            .then((res) => {
+                                                if (res.status === 200) {
+                                                    alert('Opinia została usunięta');
+                                                }
+                                            })
+                                            .catch((err) => {
+                                                console.log(err);
+                                            });
+                                    }}
+                                >
+                                    Usuń
+                                </button>
+                            )
+
+
+                                    }
+                        </div>
+                    ))}
                 </div>
                 <div>
                     <p className='text-center'>Zedytuj tego poksa</p>
@@ -183,8 +269,26 @@ export default function EachPokemon() {
 
                 </div>
                 <div className='text-center'>
-                    <p className='text-center'>Usuń tego poksa</p>
-                    <button onClick={handleDelete} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Usuń</button>
+                    <p className='text-center '>Usuń tego poksa</p>
+                    <button onClick={handleDelete} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-10'>Usuń</button>
+                </div>
+
+                <div>
+                    <div className='text-center'> Dodaj opinie o tym poksie</div>
+                    <form onSubmit={formik2.handleSubmit} className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96 ml-auto mr-auto'>
+                        <label htmlFor='opinion'>Opinia</label>
+                        <input
+                            className='shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline'
+                            id='opinion'
+                            name='opinion'
+                            type='text'
+                            onChange={formik2.handleChange}
+                            value={formik2.values.opinion}
+                        />
+                        {formik2.errors.opinion ? <div>{formik2.errors.opinion}</div> : null}
+                        <button type='submit' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-10'>Dodaj</button>
+                    </form>
+                        
                 </div>
 
             </div>

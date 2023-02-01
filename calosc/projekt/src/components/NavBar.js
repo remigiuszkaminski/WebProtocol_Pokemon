@@ -10,6 +10,7 @@ export default function NavBar() {
 
     const name = getCookie('name');
     console.log(name)
+    const userid = getCookie('user');
 
     if(name === undefined) {
         return (
@@ -30,6 +31,7 @@ export default function NavBar() {
                         <div className='ml-auto text-white mt-auto mb-auto flex-grow-1'> <Link to="/">Strona Główna</Link></div>
                         <div className='ml-auto text-white mt-auto mb-auto '><Link to='/search'>Wyszukaj pokemona</Link></div>
                         <div className='ml-auto text-white mt-auto mb-auto flex-grow-1'> <Link to='/create'>Dodaj Pokemona</Link></div>
+                        <div className='ml-auto text-white mt-auto mb-auto flex-grow-1'> <Link to={`/youracc/${userid}`}>Info o twoim koncie</Link></div>
                         <div className='ml-auto text-white mt-auto mb-auto mr-4 align-self-end ml-auto '><Link to='/chat'>Poczatuj</Link></div>
                 </div>
             </div>
