@@ -94,50 +94,55 @@ export default function YourAcc() {
                     <div className="text-center">
                         <div>Edytuj swój profil:
                             {name === user[0].name ? (
-                                <div className="border-1 bg-gray-500 w-96 ml-auto mr-auto text-white rounded p-2">
-                                    <form onSubmit={formik.handleSubmit}>
-                                        <p>Wpisz nowe hasło:</p>
-                                        <input
-                                            className="rounded"
-                                            id="password"
-                                            name="password"
-                                            type="password"
-                                            placeholder="Password"
-                                            onChange={formik.handleChange}
-                                            value={formik.values.password}
-                                        />
-                                        {formik.errors.password ? <div>{formik.errors.password}</div> : null}
-                                        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-10 mr-2">Zmień hasło</button>
-                                    </form>
+                                <div>
+                                    <div className="border-1 bg-gray-500 w-96 ml-auto mr-auto text-white rounded p-2">
+                                        <form onSubmit={formik.handleSubmit}>
+                                            <p>Wpisz nowe hasło:</p>
+                                            <input
+                                                className="rounded"
+                                                id="password"
+                                                name="password"
+                                                type="password"
+                                                placeholder="Password"
+                                                onChange={formik.handleChange}
+                                                value={formik.values.password}
+                                            />
+                                            {formik.errors.password ? <div>{formik.errors.password}</div> : null}
+                                            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-10 mr-2">Zmień hasło</button>
+                                        </form>
+                                        <div>
+                                            <p>Usuń konto:</p>
+                                            <button onClick={() => {
+                                                fetch(`http://localhost:5000/deleteuser/${id}`, {
+                                                    method: 'DELETE',
+                                                })
+                                                    .then((res) => {
+                                                        if (res.status === 200) {
+                                                            alert('Konto zostało usunięte');
+                                                            removeCookies('user');
+                                                            removeCookies('name');
+                                                            navigate('/');
+                                                        } else {
+                                                            alert('Konto nie zostało usunięte');
+                                                        }
+                                                    });
+                                            }}
+                                            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-10 mr-2'
+                                            >Usuń konto</button>
+                                            <p>Wyloguj się:</p>
+                                            <button onClick={() => {
+                                                removeCookies('user');
+                                                removeCookies('name');
+                                                navigate('/');
+                                            }}
+                                            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-10 mr-2'
+                                            >
+                                                Wyloguj się
+                                            </button>
+                                        </div>
+                                    </div>
                                     <div>
-                                        <p>Usuń konto:</p>
-                                        <button onClick={() => {
-                                            fetch(`http://localhost:5000/deleteuser/${id}`, {
-                                                method: 'DELETE',
-                                            })
-                                                .then((res) => {
-                                                    if (res.status === 200) {
-                                                        alert('Konto zostało usunięte');
-                                                        removeCookies('user');
-                                                        removeCookies('name');
-                                                        navigate('/');
-                                                    } else {
-                                                        alert('Konto nie zostało usunięte');
-                                                    }
-                                                });
-                                        }}
-                                        className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-10 mr-2'
-                                        >Usuń konto</button>
-                                        <p>Wyloguj się:</p>
-                                        <button onClick={() => {
-                                            removeCookies('user');
-                                            removeCookies('name');
-                                            navigate('/');
-                                        }}
-                                        className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-10 mr-2'
-                                        >
-                                            Wyloguj się
-                                        </button>
+                                            <div>Jeśli spodobał ci się nasz blog, dodaj o nim swoją opinie!: <p className="text-blue-700"><Link to='/blogopinions/' className="text-blue">Kliknij tutaj</Link></p></div>
                                     </div>
                                 </div>
                             ) : (

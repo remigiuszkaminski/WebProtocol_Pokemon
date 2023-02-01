@@ -159,7 +159,7 @@ export default function EachPokemon() {
                     <div className='flex justify-between'>
                             <div className='text-2xl text-white font-bold uppercase justify-self-start my-2 ml-2 flex-grow-0'>POKEMON BLOG</div>
                             <div className='ml-auto text-white mt-auto mb-auto flex-grow-1'> <Link to="/">Strona Główna</Link></div>
-                            <div className='ml-auto text-white mt-auto mb-auto flex-grow-1'> <Link to="/search">Wyszukiwarka</Link></div>
+                            <div className='ml-auto text-white mt-auto mb-auto flex-grow-1 mr-auto'> <Link to="/search">Wyszukiwarka</Link></div>
                     </div>
                 </div>
                 <div className='ml-auto mr-auto w-76 h-86 rounded-lg overflow-hidden shadow-lg 1/4 relative'>
@@ -176,11 +176,11 @@ export default function EachPokemon() {
                 <div className='mb-4'>
                     <div className='text-center'>Opinie o tym pokemonie:</div>
                     {pokemon[0].opinions.map((opinion) => (
-                        <div className='bg-white shadow-md rounded px-8 pt-6 pb-8 w-96 ml-auto mr-auto'>
+                        <div className='bg-white shadow-md rounded px-8 pt-6 pb-8 w-96 ml-auto mr-auto flex'>
                             <p className='mb-2'>{opinion.name}: {opinion.opinion}</p>
                             {opinion.name === name && (
                                 <button
-                                    className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+                                    className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2'
                                     onClick={() => {
                                         fetch(`http://localhost:5000/deleteopinion/${id}`, {
                                             method: 'PUT',

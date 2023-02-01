@@ -9,6 +9,7 @@ import CreatePokemon from './components/CreatePokemon';
 import PokemonSearch from './components/PokemonSearch';
 import EachPokemon from './components/EachPokemon';
 import YourAcc from './components/YourAcc';
+import BlogOpinions from './components/BlogOpinions';
 function App() {
   return (
     <div className="App">
@@ -21,6 +22,7 @@ function App() {
         <Route path='search' element={<PokemonSearch />} />
         <Route path='pokemon/:id' element={<EachPokemon />} />
         <Route path='youracc/:id' element={<YourAcc />} />
+        <Route path='blogopinions' element={<BlogOpinions />} />
       </Routes>
     </div>
   );
