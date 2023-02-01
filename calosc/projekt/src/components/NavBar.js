@@ -30,6 +30,7 @@ export default function NavBar() {
                         <div className='text-2xl text-white font-bold uppercase justify-self-start my-2 ml-2 flex-grow-0'>POKEMON BLOG</div>
                         <div className='ml-auto text-white mt-auto mb-auto flex-grow-1'> <Link to="/">Strona Główna</Link></div>
                         <div className='ml-auto text-white mt-auto mb-auto '><Link to='/search'>Wyszukaj pokemona</Link></div>
+                        <div className='ml-auto text-white mt-auto mb-auto '><Link to='/locations'>Lokacje</Link></div>
                         <div className='ml-auto text-white mt-auto mb-auto flex-grow-1'> <Link to='/create'>Dodaj Pokemona</Link></div>
                         <div className='ml-auto text-white mt-auto mb-auto flex-grow-1'> <Link to={`/youracc/${userid}`}>Info o twoim koncie</Link></div>
                         <div className='ml-auto text-white mt-auto mb-auto mr-4 align-self-end ml-auto '><Link to='/chat'>Poczatuj</Link></div>

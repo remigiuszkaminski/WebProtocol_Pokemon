@@ -39,7 +39,8 @@ export default function ChatMQTT() {
         return () => {
             client.end();
             setClient(null);
-        }
+        };
+        
     }, [czaters, subik]);
 
     const validate = (values) => {
@@ -65,12 +66,13 @@ export default function ChatMQTT() {
     function handleEndingChat() {
         client.end();
         setClient(null);
+        console.log("Zakonczenie dzialania clienta")
     }
 
     return (
         <div className="text-center">
             <h1 className='bg-gray-600 mb-20 text-xl text-white p-2.5'>ChatMQTT = porozmawiajmy o pokemonach <Link to='/' className='ml-12'><button onClick={handleEndingChat}>Wroc do strony glownej</button></Link></h1>
-            <div className=''>
+            <div className='p-2'>
                 <div className='bg-white  border-1  border-neutral-700 w-96 text-left ml-auto mr-auto mb-2'>
                     {chat.map((message, index) => (
                         <div key={index} className='bg-white w-96'>{message}</div>
@@ -85,7 +87,7 @@ export default function ChatMQTT() {
                         onChange={formik.handleChange}
                         value={formik.values.message}
                     />
-                    <button type="submit" className='w-full border-1 border-neutral-700 bg-gray-600 text-white'>Wyślij wiadomość do innych pokeświrów</button>
+                    <button type="submit" className='w-full border-1 border-neutral-700 bg-gray-600 text-white rounded'>Wyślij wiadomość do innych pokeświrów</button>
                 </form>
             </div>
         </div>

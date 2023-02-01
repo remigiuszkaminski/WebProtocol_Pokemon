@@ -10,6 +10,8 @@ import PokemonSearch from './components/PokemonSearch';
 import EachPokemon from './components/EachPokemon';
 import YourAcc from './components/YourAcc';
 import BlogOpinions from './components/BlogOpinions';
+import Locations from './components/Locations';
+import EachLocation from './components/EachLocation';
 function App() {
   return (
     <div className="App">
@@ -23,6 +25,8 @@ function App() {
         <Route path='pokemon/:id' element={<EachPokemon />} />
         <Route path='youracc/:id' element={<YourAcc />} />
         <Route path='blogopinions' element={<BlogOpinions />} />
+        <Route path='locations' element={<Locations />} />
+        <Route path='location/:id' element={<EachLocation />} />
       </Routes>
     </div>
   );

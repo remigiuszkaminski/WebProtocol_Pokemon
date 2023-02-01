@@ -18,10 +18,10 @@ const saltRounds = 10;
 
 recordRoutes.route("/register").post(function (req, res) {
     let db_connect = dbo.getDb("uzytkownicy");
-    db_connect.collection("users").findOne({ email: req.body.email }, function (err, result) {
+    db_connect.collection("users").findOne({ $or: [{ email: req.body.email }, { name: req.body.name }] }, function (err, result) {
         if (err) throw err;
         if (result) {
-            res.json({ message: "Email juz uzyty" });
+            res.json({ message: "Email lub nazwa juz uzyta" });
         } else {
             bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
                 let myobj = {
@@ -293,6 +293,75 @@ recordRoutes.route("/updateblogopinion/:id").put(function(req, res) {
     });
     res.json({ message: "Opinion updated successfully" })
 });
+
+
+
+
+recordRoutes.route("/createnewlocation").post(function(req, res) {
+    let db_connect = dbo.getDb("pokemony");
+    let myobj = {
+        name: req.body.name,
+        terrain: req.body.terrain,
+        arealevel: req.body.arealevel,
+        owner: req.body.owner,
+        image: req.body.image
+    };
+    db_connect.collection("locations").insertOne(myobj, function(err, result) {
+        if (err) throw err;
+        console.log('Dodano lokacje: ' + myobj.name + '')
+    });
+    res.json({ message: "Location added successfully" });
+});
+
+
+recordRoutes.route("/getalllocations").get(function(req, res) {
+    let db_connect = dbo.getDb("pokemony");
+    db_connect.collection("locations").find({}).toArray(function(err, result) {
+        if (err) throw err;
+        res.json(result);
+    });
+});
+
+
+recordRoutes.route("/getlocation/:id").get(function(req, res) {
+    let db_connect = dbo.getDb("pokemony");
+    let myquery = { _id: ObjectId(req.params.id) };
+    db_connect.collection("locations").find(myquery).toArray(function(err, result) {
+        if (err) throw err;
+        res.json(result);
+    });
+});
+
+
+recordRoutes.route("/updatelocation/:id").put(function(req, res) {
+    let db_connect = dbo.getDb("pokemony");
+    let myquery = { _id: ObjectId(req.params.id) };
+    let newvalues = {
+        $set: {
+            name: req.body.name,
+            terrain: req.body.terrain,
+            arealevel: req.body.arealevel,
+            owner: req.body.owner,
+            image: req.body.image
+        }
+    };
+    db_connect.collection("locations").updateOne(myquery, newvalues, function(err, result) {
+        if (err) throw err;
+        console.log( "Location updated" + "")
+    });
+    res.json({ message: "Location updated successfully" })
+});
+
+
+recordRoutes.route("/deletelocation/:id").delete(function(req, res) {
+    let db_connect = dbo.getDb("pokemony");
+    let myquery = { _id: ObjectId(req.params.id) };
+    db_connect.collection("locations").deleteOne(myquery, function(err, result) {
+        if (err) throw err;
+        res.json(result);
+    });
+});
+
 
 
 

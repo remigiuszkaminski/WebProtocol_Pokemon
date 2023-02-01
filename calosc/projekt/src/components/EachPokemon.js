@@ -175,8 +175,8 @@ export default function EachPokemon() {
                 </div>
                 <div className='mb-4'>
                     <div className='text-center'>Opinie o tym pokemonie:</div>
-                    {pokemon[0].opinions.map((opinion) => (
-                        <div className='bg-white shadow-md rounded px-8 pt-6 pb-8 w-96 ml-auto mr-auto flex'>
+                    {pokemon[0].opinions.map((opinion, i) => (
+                        <div key={i}className='bg-white shadow-md rounded px-8 pt-6 pb-8 w-96 ml-auto mr-auto flex'>
                             <p className='mb-2'>{opinion.name}: {opinion.opinion}</p>
                             {opinion.name === name && (
                                 <button
