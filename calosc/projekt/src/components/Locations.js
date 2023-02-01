@@ -5,16 +5,17 @@ import { useFormik } from "formik";
 export default function Locations() {
     const [locations, setLocations] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const [newLocation, setNewLocation] = useState(false);
     useEffect(() => {
         fetch("http://localhost:5000/getalllocations")
             .then((res) => res.json())
             .then((data) => {
                 setLocations(data);
                 setLoading(false);
+                setNewLocation(false);
                 console.log(data)
             });
-    }, [setLocations]);
+    }, [setLocations, newLocation]);
 
     function getCookie(name) {
         var value = "; " + document.cookie;
@@ -74,6 +75,7 @@ export default function Locations() {
                 .catch((err) => {
                     console.log(err);
                 });
+            setNewLocation(true)
             formik.resetForm();
         },
     });
