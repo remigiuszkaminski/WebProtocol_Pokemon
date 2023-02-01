@@ -122,7 +122,19 @@ export default function YourAcc() {
                                                         alert('Konto nie zostało usunięte');
                                                     }
                                                 });
-                                        }}>Usuń konto</button>
+                                        }}
+                                        className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-10 mr-2'
+                                        >Usuń konto</button>
+                                        <p>Wyloguj się:</p>
+                                        <button onClick={() => {
+                                            removeCookies('user');
+                                            removeCookies('name');
+                                            navigate('/');
+                                        }}
+                                        className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-10 mr-2'
+                                        >
+                                            Wyloguj się
+                                        </button>
                                     </div>
                                 </div>
                             ) : (

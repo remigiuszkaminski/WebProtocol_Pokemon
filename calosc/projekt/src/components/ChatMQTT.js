@@ -42,10 +42,20 @@ export default function ChatMQTT() {
         }
     }, [czaters, subik]);
 
+    const validate = (values) => {
+        const errors = {};
+        if (!values.message) {
+            errors.message = 'Wiadomość wymagana!';
+        }
+        return errors;
+    };
+
+
     const formik = useFormik({
         initialValues: {
             message: '',
         },
+        validate,
         onSubmit: (values) => {
             client.publish('/chat/message', `${name}: ${values.message}`);
             formik.resetForm();
