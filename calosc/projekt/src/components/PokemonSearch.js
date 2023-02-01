@@ -45,10 +45,15 @@ export default function PokemonSearch() {
 
     return (
         <div className='text-center'>
-            <div className='bg-gray-600 mb-20 p-2 text-white text-2xl'>Wyszukiwarka<Link to='/' className='ml-8'>Wroc do glownej</Link></div>
-            <form onSubmit={formik.handleSubmit}>
+            <div className='bg-gray-600 mb-20'>
+                    <div className='flex justify-between'>
+                        <div className='text-2xl text-white font-bold uppercase justify-self-start my-2 ml-2 flex-grow-0'>POKEMON BLOG</div>
+                        <div className='ml-auto text-white mt-auto mb-auto mr-auto'> <Link to="/">Strona Główna</Link></div>
+                </div>
+            </div>
+            <form onSubmit={formik.handleSubmit} className='border-1 bg-gray-500 w-96 ml-auto mr-auto text-white rounded p-2 mb-4'>
                 <input
-                className="border-2 border-black rounded"
+                className="border-2 border-black rounded py-2 px-4"
                 id='search'
                 name='search'
                 type="text"
@@ -69,7 +74,7 @@ export default function PokemonSearch() {
                       <p className=' text-xs mt-2'>Właściciel: {pokemon.owner}</p>
                       <p className=' text-xs mt-2'>Typ: {pokemon.type}</p>
                       <p className=' text-xs mt-2'>Poziom: {pokemon.level}</p>
-                      <p className=' text-xs mt-2 text-blue-600'><Link to={`/pokemon/${pokemon._id}`}>Strona o nim</Link></p>
+                      <p className=' text-xs mt-2 text-blue-600'><Link to={`/pokemon/${pokemon._id}`}>Przejdź do jego strony.</Link></p>
                     </div>
                   </div>
                 ))}

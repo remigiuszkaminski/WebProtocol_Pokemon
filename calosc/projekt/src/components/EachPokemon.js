@@ -177,10 +177,10 @@ export default function EachPokemon() {
                     <div className='text-center'>Opinie o tym pokemonie:</div>
                     {pokemon[0].opinions.map((opinion) => (
                         <div className='bg-white shadow-md rounded px-8 pt-6 pb-8 w-96 ml-auto mr-auto'>
-                            <p className='text-xs mb-2'>{opinion.name}: {opinion.opinion}</p>
+                            <p className='mb-2'>{opinion.name}: {opinion.opinion}</p>
                             {opinion.name === name && (
                                 <button
-                                    className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+                                    className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
                                     onClick={() => {
                                         fetch(`http://localhost:5000/deleteopinion/${id}`, {
                                             method: 'PUT',
@@ -264,7 +264,7 @@ export default function EachPokemon() {
                             value={formik.values.image}
                         /> 
                         {formik.errors.image ? <div>{formik.errors.image}</div> : null}
-                        <button type='submit'>Zaktualizuj</button>
+                        <button type='submit' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Zaktualizuj</button>
                     </form>
 
                 </div>

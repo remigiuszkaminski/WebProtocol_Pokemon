@@ -123,7 +123,7 @@ export default function CreatePokemon() {
                     value={formik.values.image}
                 />
                 {formik.errors.image ? <div>{formik.errors.image}</div> : null}
-                <button type="submit" className='border-1 '>Dodaj pokemona</button>
+                <button type="submit" className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-10 mr-2 '>Dodaj pokemona</button>
             </form>     
             <Link to='/' className='text-blue-500'>Wróc do strony głównej</Link> 
         </div>

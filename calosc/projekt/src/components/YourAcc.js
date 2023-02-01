@@ -83,9 +83,10 @@ export default function YourAcc() {
                                 <div className='ml-auto text-white mt-auto mb-auto flex-grow-1'> <Link to="/search">Wyszukiwarka</Link></div>
                         </div>
                     </div>
-                    <div className="text-center">
-                        <div>
-                            <p>Email twój: {user[0].email}</p>
+                    <div className="text-center mb-10">
+                        <div className="border-1 bg-gray-500 w-96 ml-auto mr-auto text-white rounded p-2">
+                            <p>Twoje dane:</p>
+                            <p>Twój email: {user[0].email}</p>
                             <p>Twój nick: {user[0].name}</p>
                             <p>Twoje id: {user[0]._id}</p>
                         </div>
@@ -93,9 +94,11 @@ export default function YourAcc() {
                     <div className="text-center">
                         <div>Edytuj swój profil:
                             {name === user[0].name ? (
-                                <div>
+                                <div className="border-1 bg-gray-500 w-96 ml-auto mr-auto text-white rounded p-2">
                                     <form onSubmit={formik.handleSubmit}>
+                                        <p>Wpisz nowe hasło:</p>
                                         <input
+                                            className="rounded"
                                             id="password"
                                             name="password"
                                             type="password"
@@ -104,10 +107,10 @@ export default function YourAcc() {
                                             value={formik.values.password}
                                         />
                                         {formik.errors.password ? <div>{formik.errors.password}</div> : null}
-                                        <button type="submit">Zmień hasło</button>
+                                        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-10 mr-2">Zmień hasło</button>
                                     </form>
                                     <div>
-                                        Usuń konto:
+                                        <p>Usuń konto:</p>
                                         <button onClick={() => {
                                             fetch(`http://localhost:5000/deleteuser/${id}`, {
                                                 method: 'DELETE',
@@ -138,7 +141,7 @@ export default function YourAcc() {
                                     </div>
                                 </div>
                             ) : (
-                                <p>Nie możesz zmienić hasła innego użytkownika</p>
+                                <p>Nie możesz zmieniać danych innego użytkownika</p>
                             )}
                         </div>
                     </div>

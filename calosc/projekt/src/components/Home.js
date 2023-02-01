@@ -28,7 +28,7 @@ export default function Home() {
         <NavBar />
         <div>Strona główna</div>
         <div>
-          Pare pokemonów ha
+          <p className="mb-8 text-xl">Pare przykładowych pokemonów z naszego bloga:</p>
           <div className='grid grid-cols-4 gap-6 gap-x-1 grid-flow-dense justify-center gap-2.5' >
           {randompokemons.map((pokemon) => (
             <div key={pokemon._id} className='ml-auto mr-auto w-76 h-86 rounded-lg overflow-hidden shadow-lg 1/4 relative'>
